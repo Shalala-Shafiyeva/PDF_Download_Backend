@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Presentation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PresentationController extends Controller
 {
@@ -34,6 +35,21 @@ class PresentationController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'title' => "required|max:255",
+            'description' => "required",
+            'sender' => "required|numeric",
+            'receiver' => "required|numeric"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+                'success' => false
+            ], 422);
+        }
+
         $presentation = new Presentation();
         $presentation->title = $request->title;
         $presentation->description = $request->description;
@@ -50,9 +66,13 @@ class PresentationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Presentation $presentation)
+    public function show($id)
     {
-        //
+        $presentation = Presentation::find($id);
+        return response()->json([
+            'data' => $presentation,
+            'success' => true
+        ]);
     }
 
     /**
@@ -66,9 +86,19 @@ class PresentationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Presentation $presentation)
+    public function update(Request $request, $id)
     {
-        //
+        $presentation = Presentation::find($id);
+        $presentation->title = $request->title;
+        $presentation->description = $request->description;
+        $presentation->sender = $request->sender;
+        $presentation->receiver = $request->receiver;
+        if ($presentation->save()) {
+            return response()->json([
+                'data' => $presentation,
+                'success' => true
+            ]);
+        }
     }
 
     /**

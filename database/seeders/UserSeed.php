@@ -14,15 +14,37 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Vüsal',
-            "surname" => "Mustafayev",
-            "position" => 'IT söbəsinin müdiri'
-        ]);
-        User::create([
-            'name' => 'Elçin',
-            "surname" => "Həmidov",
-            "position" => 'Sisadmin'
+        User::insert([
+            [
+                'name' => 'Vüsal',
+                'surname' => 'Mustafayev',
+                'position' => 'IT söbəsinin müdiri',
+            ],
+            [
+                'name' => 'Elçin',
+                'surname' => 'Həmidov',
+                'position' => 'Sistem inzibatçısı',
+            ],
+            [
+                'name' => 'Yaqub',
+                'surname' => 'Tağıyev',
+                'position' => 'Şəbəkə inzibatçısı',
+            ],
+            [
+                'name' => 'Şəlalə',
+                'surname' => 'Şəfiyeva',
+                'position' => 'İT koordinator',
+            ],
+            [
+                'name' => 'Kərim',
+                'surname' => 'Hümmətli',
+                'position' => 'IT mütəxəssisi',
+            ],
+            [
+                'name' => 'Faiq',
+                'surname' => 'Ismayılov',
+                'position' => 'Təhlükəsizlik mütəxəssisi',
+            ]
         ]);
     }
 }
